@@ -9,6 +9,30 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static('public'));
 
+// converter dados do formulário em objeto javascript
+app.use(express.urlencoded({
+  extended: true
+}))
+
+app.use(express.json())
+
+// rotas
+app.post('/criar', (req, res) => {
+  const descricao = req.body.descricao
+  const completa = 0
+
+  const sql = `
+    INSERT INTO tarefas(descricao, completa)
+    VALUE ('${descricao}', '${completa}')
+  `
+  conexao.query(sql, (erro) => {
+    if(erro) {
+      return console.log(erro)
+    }
+    res.redirect('/')
+  })
+})
+
 app.get('/', (req, res) => {
     res.render('home')
 })
@@ -32,4 +56,6 @@ conexao.connect((erro) => {
     console.log("Servidor está rodando na porta 3000!")
   })  
 })
+
+
 
