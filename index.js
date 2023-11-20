@@ -17,6 +17,17 @@ app.use(express.urlencoded({
 app.use(express.json())
 
 // rotas
+app.get('/limpartarefas', (req, res) => {
+  const sql = 'DELETE FROM tarefas'
+
+  conexao.query(sql, (erro) => {
+    if(erro) {
+      return console.log(erro)
+    }
+    res.redirect('/')
+  })
+})
+
 app.post('/excluir', (req, res) => {
   const id = req.body.id
 
